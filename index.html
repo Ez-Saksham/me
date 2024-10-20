@@ -1,1 +1,335 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saksham@Linux</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #282a36;
+            --terminal-bg: #1d1f27;
+            --text-color: #f8f8f2;
+            --prompt-color: #50fa7b;
+            --accent-color: #bd93f9;
+            --error-color: #ff5555;
+            --comment-color: #6272a4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Ubuntu Mono', 'Courier New', monospace;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .terminal {
+            background: var(--terminal-bg);
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #424242;
+            padding: 8px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27c93f; }
+
+        .terminal-title {
+            color: #ddd;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .terminal-content {
+            margin-top: 40px;
+            padding-top: 10px;
+        }
+
+        .prompt {
+            color: var(--prompt-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt::before {
+            content: "saksham@linux:~$";
+            color: var(--prompt-color);
+            margin-right: 10px;
+        }
+
+        .output {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .command {
+            color: var(--accent-color);
+        }
+
+        .neofetch {
+            display: flex;
+            gap: 40px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ascii-art {
+            color: var(--accent-color);
+            font-size: 12px;
+            line-height: 1.2;
+            white-space: pre;
+        }
+
+        .system-info {
+            list-style: none;
+        }
+
+        .system-info li {
+            display: flex;
+            gap: 10px;
+        }
+
+        .system-info .label {
+            color: var(--accent-color);
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        .links a {
+            color: var(--prompt-color);
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--prompt-color);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .help-text {
+            color: var(--comment-color);
+            margin-bottom: 15px;
+        }
+
+        .content-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .neofetch {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .ascii-art {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button close"></div>
+                <div class="terminal-button minimize"></div>
+                <div class="terminal-button maximize"></div>
+            </div>
+            <div class="terminal-title">saksham@linux: ~</div>
+        </div>
+
+        <div class="terminal-content">
+            <div class="prompt command">neofetch</div>
+            <div class="neofetch">
+                <div class="ascii-art">
+                    .-/+oossssoo+/-.
+                   `:+ssssssssssssssssss+:`
+                 -+ssssssssssssssssssyyssss+-
+               .ossssssssssssssssss dMMMNy sssso.
+              /sssssssssss hohhy ossshNMMN  ssss+
+             +sssssssss-    /M/    -yMMMMy  sssss+
+            /ssssssssss     oN.     sMMMy   ssssss/
+           /sssssssy        -N:     .NMy    ssssssss/
+          .sssssssh         `ho     .h+   -ssssssssss.
+          +ssss               y`    +.    /ssssssssssss+
+         /sss                       -     /sssssssssssssss/
+         +ss                             /ssssssssssssssss+
+         ss                             +sssssssssssssssss
+        oss                            -sssssssssssssssssso
+        .ss                           .sssssssssssssssssss.
+                </div>
+                <div class="system-info">
+                    <img src="/home/jeez-saksham/POT/MY-PP.jpg" alt="Profile" class="profile-pic">
+                    <li><span class="label">OS:</span> Saksham Yadav</li>
+                    <li><span class="label">Host:</span> Developer & Tech Enthusiast</li>
+                    <li><span class="label">Kernel:</span> Self-taught programmer</li>
+                    <li><span class="label">Packages:</span> Web Development, Python, Linux</li>
+                    <li><span class="label">Shell:</span> Constantly Learning</li>
+                    <div class="links">
+                        <a href="https://github.com/Ez-Saksham" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://x.com/Zodiac628327?t=ykIcEV5EeWck3sUPiEi9ig&s=09" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                        <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help-text">Type 'help' or a command below:</div>
+            <div class="prompt">
+                <span class="command" id="current-command">help</span>
+                <span class="cursor"></span>
+            </div>
+            
+            <div id="help" class="content-section active">
+                Available commands:
+                - education
+                - projects
+                - experience
+                - clear
+                - exit
+            </div>
+
+            <div id="education" class="content-section">
+                <div class="output">
+                    📚 Education
+                    ---------------
+                    → High School
+                    → Self Taught Developer
+                </div>
+            </div>
+
+            <div id="projects" class="content-section">
+                <div class="output">
+                    💻 Projects
+                    ---------------
+                    → GitHub Repositories
+                    → In Progress...
+                </div>
+            </div>
+
+            <div id="experience" class="content-section">
+                <div class="output">
+                    🚀 Experience
+                    ---------------
+                    → Building experience through projects
+                    → Learning new technologies
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const commands = ['help', 'education', 'projects', 'experience', 'clear', 'exit'];
+        const commandInput = document.getElementById('current-command');
+        let currentCommand = '';
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                executeCommand(currentCommand);
+                currentCommand = '';
+                commandInput.textContent = currentCommand;
+            } else if (e.key === 'Backspace') {
+                currentCommand = currentCommand.slice(0, -1);
+                commandInput.textContent = currentCommand;
+            } else if (e.key.length === 1) {
+                currentCommand += e.key;
+                commandInput.textContent = currentCommand;
+            }
+        });
+
+        function executeCommand(cmd) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            if (cmd === 'clear') {
+                // Clear terminal content except the last prompt
+                const sections = document.querySelectorAll('.content-section');
+                sections.forEach(section => section.style.display = 'none');
+            } else if (cmd === 'exit') {
+                window.close();
+            } else if (commands.includes(cmd)) {
+                document.getElementById(cmd).classList.add('active');
+            } else {
+                // Show error for unknown command
+                const helpSection = document.getElementById('help');
+                helpSection.classList.add('active');
+                helpSection.innerHTML += `<br>Command not found: ${cmd}`;
+            }
+
+            // Add new prompt
+            const terminal = document.querySelector('.terminal-content');
+            const newPrompt = document.createElement('div');
+            newPrompt.className = 'prompt';
+            newPrompt.innerHTML = `<span class="command" id="current-command"></span><span class="cursor"></span>`;
+            terminal.appendChild(newPrompt);
+        }
+    </script>
+</body>
+</html>
+
